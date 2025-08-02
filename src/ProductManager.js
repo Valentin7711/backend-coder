@@ -50,8 +50,6 @@ class ProductManager {
     const products = await this.#readFile();
     const index = products.findIndex(p => p.id === id);
     if (index === -1) return null;
-
-    // Evitar que se actualice el ID
     if ('id' in updateFields) delete updateFields.id;
 
     products[index] = { ...products[index], ...updateFields };

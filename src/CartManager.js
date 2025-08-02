@@ -37,7 +37,6 @@ class CartManager {
     const cart = carts.find(c => c.id === cartId);
     if (!cart) return null;
 
-    // Ver si el producto ya está en el carrito
     const prodInCart = cart.products.find(p => p.product === productId);
     if (prodInCart) {
       prodInCart.quantity += 1;

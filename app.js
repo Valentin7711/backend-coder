@@ -7,7 +7,6 @@ const PORT = 8080;
 
 app.use(express.json());
 
-// Montamos los routers con prefijo /api
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
