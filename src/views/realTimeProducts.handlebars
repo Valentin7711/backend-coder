@@ -1,0 +1,49 @@
+<h1>Lista de productos</h1>
+
+<form id="productForm">
+  <input type="text" name="title" placeholder="Título" required />
+  <input type="number" name="price" placeholder="Precio" required />
+  <input type="number" name="stock" placeholder="Stock" required />
+  <button type="submit">Agregar</button>
+</form>
+
+<ul id="productList"></ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const productList = document.getElementById("productList");
+  const form = document.getElementById("productForm");
+
+  socket.on("products", (products) => {
+    productList.innerHTML = "";
+    products.forEach(p => {
+      const li = document.createElement("li");
+      li.dataset.id = p.id;
+      li.innerHTML = `
+        ${p.title} - $${p.price} (Stock: ${p.stock})
+        <button class="deleteBtn">Eliminar</button>
+      `;
+      productList.appendChild(li);
+    });
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+    data.price = parseFloat(data.price);
+    data.stock = parseInt(data.stock) || 0;
+    socket.emit("addProduct", data);
+    form.reset();
+  });
+
+  productList.addEventListener("click", (e) => {
+    if (e.target.classList.contains("deleteBtn")) {
+      const id = e.target.parentElement.dataset.id;
+      socket.emit("deleteProduct", id);
+    }
+  });
+
+  socket.on("error", (msg) => alert(msg));
+</script>

@@ -1,16 +1,1 @@
-[
-  {
-    "id": 1,
-    "title": "Camiseta",
-    "description": "Camiseta deportiva",
-    "code": "CAM123",
-    "price": 1500,
-    "status": true,
-    "stock": 10,
-    "category": "Ropa",
-    "thumbnails": [
-      "ruta1.jpg",
-      "ruta2.jpg"
-    ]
-  }
-]
+[]

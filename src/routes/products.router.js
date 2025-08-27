@@ -1,16 +1,14 @@
 const express = require('express');
-const ProductManager = require('../src/ProductManager');
+const ProductManager = require('../ProductManager');
 
 const router = express.Router();
 const manager = new ProductManager('./data/products.json');
 
-// GET
 router.get('/', async (req, res) => {
   const products = await manager.getProducts();
   res.json({ products });
 });
 
-// GET 
 router.get('/:pid', async (req, res) => {
   const id = parseInt(req.params.pid);
   const product = await manager.getProductById(id);
@@ -21,7 +19,6 @@ router.get('/:pid', async (req, res) => {
   }
 });
 
-// POST 
 router.post('/', async (req, res) => {
   const product = req.body;
   try {
@@ -32,7 +29,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// PUT
 router.put('/:pid', async (req, res) => {
   const id = parseInt(req.params.pid);
   const update = req.body;
@@ -48,7 +44,6 @@ router.put('/:pid', async (req, res) => {
   }
 });
 
-// DELETE
 router.delete('/:pid', async (req, res) => {
   const id = parseInt(req.params.pid);
   const deleted = await manager.deleteProduct(id);
